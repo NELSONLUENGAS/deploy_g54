@@ -8,7 +8,7 @@ const ContextProvider = ({ children }) => {
 	useEffect(() => {
 		setUsersSession({
 			email: 'tester@tester.com',
-			role: 'admin',
+			role: 'customer',
 		});
 	}, []);
 

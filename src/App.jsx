@@ -5,8 +5,12 @@ import Perfil from './views/Perfil';
 import Dashboard from './views/Dashboard';
 import Footer from './components/Footer';
 import { Header } from './components/Header';
+import RouterGuard from './guard/RouterGuard';
+import { useContext } from 'react';
+import { PokeContext } from './context/ContextProvider';
 
 function App() {
+	const { userSession } = useContext(PokeContext);
 	return (
 		<Router>
 			<Header />
@@ -16,16 +20,23 @@ function App() {
 					// index
 					element={<Home />}
 				/>
+
 				<Route
-					path="/perfil"
-					// index
-					element={<Perfil />}
-				/>
-				<Route
-					path="/dashboard"
-					// index
-					element={<Dashboard />}
-				/>
+					element={
+						<RouterGuard isAllowed={userSession?.role.includes('admin')} />
+					}
+				>
+					<Route
+						path="/perfil"
+						// index
+						element={<Perfil />}
+					/>
+					<Route
+						path="/dashboard"
+						// index
+						element={<Dashboard />}
+					/>
+				</Route>
 			</Routes>
 			<Footer />
 		</Router>
